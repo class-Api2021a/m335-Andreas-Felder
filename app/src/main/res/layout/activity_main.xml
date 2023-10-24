@@ -181,13 +181,30 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="438dp"
-        android:layout_height="327dp"
+        android:layout_height="275dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/shadow_box"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/editTextNumberDecimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            tools:layout_editor_absoluteX="183dp"
+            tools:layout_editor_absoluteY="60dp" />
+
+        <EditText
+            android:id="@+id/editTextNumberDecimal2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            tools:layout_editor_absoluteX="183dp"
+            tools:layout_editor_absoluteY="150dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
