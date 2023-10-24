@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">My Currency</string>
+    <string name="calculator_button_1">1</string>
+    <string name="calculator_button_2">2</string>
+    <string name="calculator_button_3">3</string>
+    <string name="calculator_button_4">4</string>
+    <string name="calculator_button_5">5</string>
+    <string name="calculator_button_6">6</string>
+    <string name="calculator_button_7">7</string>
+    <string name="calculator_button_8">8</string>
+    <string name="calculator_button_9">9</string>
+    <string name="calculator_button_0">0</string>
+    <string name="calculator_button_Dot">.</string>
+    <string name="empty_string">‎ </string>
 </resources>
