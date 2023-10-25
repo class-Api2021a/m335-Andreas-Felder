@@ -184,16 +184,17 @@
         app:srcCompat="@drawable/calculator_color_background" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="0dp"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
 
         android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintHeight_percent="0.33"
         android:background="@drawable/shadow_box"
-
         app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHeight_percent="0.33"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -202,70 +203,75 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="175dp"
-            android:layout_marginTop="70dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="185dp"
             android:ems="10"
             android:hint="00.00"
             android:inputType="numberDecimal"
             app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/secondaryCurrencyInput"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_marginStart="175dp"
-            android:layout_marginTop="170dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="110dp"
             android:ems="10"
             android:hint="00.00"
             android:inputType="numberDecimal"
+
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/secondaryCurrencyArrowImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintTop_toTopOf="@+id/secondaryCurrencyInput"
+            app:srcCompat="@drawable/arrow" />
 
         <TextView
             android:id="@+id/mainCurrencyTag"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="325dp"
-            android:layout_marginBottom="200dp"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
             android:text="@string/main_currency"
             android:textColor="@color/light_blue"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyArrowImage"
+            app:layout_constraintTop_toTopOf="@+id/mainCurrencyArrowImage" />
+
+        <ImageView
+            android:id="@+id/mainCurrencyArrowImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mainCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyInput"
+            app:layout_constraintTop_toTopOf="@+id/mainCurrencyInput"
+            app:srcCompat="@drawable/arrow" />
 
         <TextView
             android:id="@+id/secondaryCurrencyTag"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginEnd="325dp"
-            android:layout_marginBottom="110dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
             android:text="@string/main_currency"
             android:textColor="@color/light_blue"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyArrowImage"
+            app:layout_constraintTop_toTopOf="@+id/secondaryCurrencyArrowImage" />
 
         <Button
             android:id="@+id/moreCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
 
             android:foreground="@drawable/arrow"
             android:text="@string/empty_string"
@@ -276,117 +282,67 @@
         <Button
             android:id="@+id/changeMainCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginEnd="275dp"
-            android:layout_marginBottom="190dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="@string/empty_string"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/mainCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyInput"
+            app:layout_constraintStart_toStartOf="@+id/mainCountryImage"
+            app:layout_constraintTop_toTopOf="@+id/mainCurrencyInput" />
 
         <Button
             android:id="@+id/changesecondaryCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="160dp"
-            android:layout_marginEnd="275dp"
-            android:layout_marginBottom="100dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="@string/empty_string"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyInput"
-            app:layout_constraintHorizontal_bias="0.052"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <ImageView
-            android:id="@+id/mainCurrencyArrowImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="280dp"
-            android:layout_marginBottom="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow" />
-
-        <ImageView
-            android:id="@+id/secondaryCurrencyArrowImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginEnd="280dp"
-            android:layout_marginBottom="110dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow" />
+            app:layout_constraintBottom_toBottomOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintStart_toStartOf="@+id/secondaryCountryImage"
+            app:layout_constraintTop_toTopOf="@+id/secondaryCurrencyInput" />
 
         <TextView
             android:id="@+id/secondaryCurrencyRateLabel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="280dp"
-            android:layout_marginBottom="80dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="\n\nTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintStart_toStartOf="@+id/secondaryCurrencyTag"
+            app:layout_constraintTop_toTopOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/mainCurrencyRateLabel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginEnd="280dp"
-            android:layout_marginBottom="170dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="\n\nTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/mainCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyInput"
+            app:layout_constraintStart_toStartOf="@+id/mainCurrencyTag"
+            app:layout_constraintTop_toTopOf="@+id/mainCurrencyInput" />
 
         <ImageView
             android:id="@+id/mainCountryImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="370dp"
-            android:layout_marginBottom="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="39dp"
+            android:layout_height="0dp"
+
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mainCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyRateLabel"
+            app:layout_constraintTop_toTopOf="@+id/mainCurrencyInput"
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <ImageView
             android:id="@+id/secondaryCountryImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginEnd="370dp"
-            android:layout_marginBottom="110dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="39dp"
+            android:layout_height="0dp"
+
+            android:layout_marginEnd="5dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyRateLabel"
+            app:layout_constraintTop_toTopOf="@+id/secondaryCurrencyInput"
             app:srcCompat="@drawable/ic_launcher_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
