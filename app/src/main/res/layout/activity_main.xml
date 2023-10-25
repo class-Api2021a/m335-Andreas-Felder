@@ -161,7 +161,7 @@
     </GridLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/topBackgroundImage"
         android:layout_width="1092dp"
         android:layout_height="729dp"
         android:layout_marginStart="-320dp"
@@ -171,7 +171,7 @@
         app:srcCompat="@drawable/calculator_color_background" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logoBackgroundImage"
         android:layout_width="869dp"
         android:layout_height="669dp"
         android:layout_marginBottom="200dp"
@@ -181,7 +181,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/topBackgroundImage"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@mipmap/logo_background" />
 
@@ -200,9 +200,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextNumberDecimal"
+            android:id="@+id/mainCurrencyInput"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_marginStart="175dp"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="25dp"
@@ -212,11 +212,11 @@
             android:inputType="numberDecimal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editTextNumberDecimal2"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal2"
+            android:id="@+id/firstCurrencyOutput"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="175dp"
@@ -232,7 +232,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/mainCurrencyTag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -248,7 +248,7 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/firstCurrencyTag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -264,7 +264,7 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/moreCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -276,7 +276,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/changeMainCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -291,7 +291,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/changeFirstCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -301,14 +301,14 @@
             android:layout_marginBottom="100dp"
             android:text="@string/empty_string"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editTextNumberDecimal"
+            app:layout_constraintEnd_toStartOf="@+id/mainCurrencyInput"
             app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/mainCurrencyArrowImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="120dp"
@@ -322,7 +322,7 @@
             app:srcCompat="@drawable/arrow" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/firstCurrencyArrowImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="120dp"
@@ -336,7 +336,7 @@
             app:srcCompat="@drawable/arrow" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/firstCurrencyRateLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -350,7 +350,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/mainCurrencyRateLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -364,7 +364,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/mainCountryImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="35dp"
@@ -378,7 +378,7 @@
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/firstCountryImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="35dp"
