@@ -216,7 +216,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/firstCurrencyOutput"
+            android:id="@+id/secondaryCurrencyInput"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="175dp"
@@ -248,7 +248,7 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/firstCurrencyTag"
+            android:id="@+id/secondaryCurrencyTag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -291,7 +291,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/changeFirstCurrencyButton"
+            android:id="@+id/changesecondaryCurrencyButton"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -322,7 +322,7 @@
             app:srcCompat="@drawable/arrow" />
 
         <ImageView
-            android:id="@+id/firstCurrencyArrowImage"
+            android:id="@+id/secondaryCurrencyArrowImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="120dp"
@@ -336,7 +336,7 @@
             app:srcCompat="@drawable/arrow" />
 
         <TextView
-            android:id="@+id/firstCurrencyRateLabel"
+            android:id="@+id/secondaryCurrencyRateLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="75dp"
@@ -378,7 +378,7 @@
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <ImageView
-            android:id="@+id/firstCountryImage"
+            android:id="@+id/secondaryCountryImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="35dp"
