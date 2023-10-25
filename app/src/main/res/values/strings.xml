@@ -12,4 +12,5 @@
     <string name="calculator_button_0">0</string>
     <string name="calculator_button_Dot">.</string>
     <string name="empty_string">‎ </string>
+    <string name="main_currency">USD</string>
 </resources>
