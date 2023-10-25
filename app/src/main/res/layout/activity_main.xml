@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/logoBackgroundImage"
+        android:layout_width="869dp"
+        android:layout_height="669dp"
+        android:alpha="0.2"
+        android:rotation="-50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.775"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        app:srcCompat="@mipmap/logo_background"
+        tools:layout_editor_absoluteY="153dp" />
+
     <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -157,17 +170,6 @@
             android:text="@string/empty_string"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
             android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/logoBackgroundImage"
-            android:layout_width="869dp"
-            android:layout_height="669dp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_marginBottom="200dp"
-            android:alpha="0.2"
-            android:rotation="-50"
-            app:srcCompat="@mipmap/logo_background" />
 
     </GridLayout>
 
