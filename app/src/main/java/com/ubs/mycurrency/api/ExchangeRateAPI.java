@@ -96,7 +96,7 @@ public class ExchangeRateAPI {
                         });
                     }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(TAG, "API request failed: " + e.getMessage());
                 handler.post(() -> {
