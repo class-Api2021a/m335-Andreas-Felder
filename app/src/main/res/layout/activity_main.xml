@@ -266,18 +266,14 @@
         <Button
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="195dp"
-            android:layout_marginTop="240dp"
-            android:layout_marginEnd="195dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+
             android:foreground="@drawable/arrow"
             android:text="@string/empty_string"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button2"

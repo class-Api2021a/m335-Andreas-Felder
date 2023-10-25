@@ -3,7 +3,7 @@ package com.ubs.mycurrency.dao;
 public class Country implements Comparable<Country> {
 
     private String countryName;
-    private String countryNameAbbreviation;
+        private String countryNameAbbreviation;
     private String flagDefinition;
 
     public Country(String countryName, String countryNameAbbreviation, String flagDefinition) {
