@@ -29,10 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        currencyMap.put(1, Currency.getEnumFromString(Currency.class, "USD")); //Default
+        currencyMap.put(1, Currency.getEnumFromString(Currency.class, "CHF")); //Default
         currencyMap.put(2, Currency.getEnumFromString(Currency.class,"EUR"));  //Default
         loadMainFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(1)).getIsoCountryCode()));
         loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(2)).getIsoCountryCode()));
+        TextView mainLabel = findViewById(R.id.mainCurrencyTag);
+        TextView secondaryLabel = findViewById(R.id.secondaryCurrencyTag);
+        mainLabel.setText(Objects.requireNonNull(currencyMap.get(1)).name());
+        secondaryLabel.setText(Objects.requireNonNull(currencyMap.get(2)).name());
+
 
         Log.i("MainActivity", "Main currency: " + Objects.requireNonNull(currencyMap.get(1)).getCountry());
         Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(currencyMap.get(2)).getCountry());
