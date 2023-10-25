@@ -186,14 +186,15 @@
         app:srcCompat="@mipmap/logo_background" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
         android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="610dp"
+        app:layout_constraintHeight_percent="0.33"
         android:background="@drawable/shadow_box"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
