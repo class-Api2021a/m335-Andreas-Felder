@@ -37,12 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity", "Main currency: " + Objects.requireNonNull(currencyMap.get(1)).getCountry());
         Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(currencyMap.get(2)).getCountry());
 
-        callAPI(Objects.requireNonNull(currencyMap.get(1)).name());
-        TextView mainLabel = findViewById(R.id.mainCurrencyRateLabel);
-        TextView secondaryLabel = findViewById(R.id.secondaryCurrencyRateLabel);
-        mainLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(1)).name(), exchangeRates));
-        secondaryLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(2)).name(), exchangeRates));
-
+        runApiThreads();
     }
 
     private void loadMainFlag(String flagDefinition) {
@@ -88,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("ExchangeRateAPI", "API call failed");
             }
         });
+    }
+
+    private synchronized void runApiThreads() {
+        Thread mainThread = new Thread(() -> callAPI(Objects.requireNonNull(currencyMap.get(1)).name()));
+
+
+        Thread secondaryThread = new Thread(() -> {
+            TextView mainLabel = findViewById(R.id.mainCurrencyRateLabel);
+            TextView secondaryLabel = findViewById(R.id.secondaryCurrencyRateLabel);
+            mainLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(1)).name(), exchangeRates).getExchangeRate());
+            secondaryLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(2)).name(), exchangeRates).getExchangeRate());
+        });
+
+        mainThread.start();
+
+        try {
+            mainThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!mainThread.isAlive()) {
+            secondaryThread.start();
+        }
     }
 
 }

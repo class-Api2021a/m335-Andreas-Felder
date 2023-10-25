@@ -33,77 +33,67 @@ public class ExchangeRateAPI {
     }
 
     public void fetchExchangeRates(String currencyCode, final OnDataAvailable callback) {
-        Thread thread = new Thread(() -> {
-            try {
-                if (apiUrl == null || apiUrl.isEmpty() || currencyCode == null || currencyCode.isEmpty()) {
-                    handler.post(() -> {
-                        callback.onDataAvailable(null, 0.0);
-                    });
-                    return;
+        if (apiUrl == null || apiUrl.isEmpty() || currencyCode == null || currencyCode.isEmpty()) {
+            callback.onDataAvailable(null, 0.0);
+            return;
+        }
+
+        Log.d(TAG, "Fetching exchange rates for currency: " + currencyCode);
+
+        // Create the complete URL by appending the currency code to the base URL
+        String completeUrl = apiUrl + currencyCode;
+
+        Log.d(TAG, "API URL: " + completeUrl);
+
+        // Create a URL object
+        URL url;
+        try {
+            url = new URL(completeUrl);
+            // Open a connection to the URL
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Get the response code
+            int responseCode = connection.getResponseCode();
+
+            Log.d(TAG, "Response Code: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Read the response from the input stream
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
                 }
 
-                Log.d(TAG, "Fetching exchange rates for currency: " + currencyCode);
+                reader.close();
 
-                // Create the complete URL by appending the currency code to the base URL
-                String completeUrl = apiUrl + currencyCode;
+                Log.d(TAG, "API Response: " + response.toString());
 
-                Log.d(TAG, "API URL: " + completeUrl);
+                // Parse the JSON response
+                try {
+                    JSONObject json = new JSONObject(response.toString());
+                    JSONObject conversionRates = json.getJSONObject("conversion_rates");
 
-                // Create a URL object
-                URL url = new URL(completeUrl);
-
-                // Open a connection to the URL
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                // Get the response code
-                int responseCode = connection.getResponseCode();
-
-                Log.d(TAG, "Response Code: " + responseCode);
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Read the response from the input stream
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
+                    // Iterate through the conversion rates and invoke the callback for each currency
+                    for (Iterator<String> it = conversionRates.keys(); it.hasNext(); ) {
+                        String code = it.next();
+                        double exchangeRate = conversionRates.getDouble(code);
+                        callback.onDataAvailable(code, exchangeRate);
                     }
-
-                    reader.close();
-
-                    Log.d(TAG, "API Response: " + response.toString());
-
-                    // Parse the JSON response
-                    try {
-                        JSONObject json = new JSONObject(response.toString());
-                        JSONObject conversionRates = json.getJSONObject("conversion_rates");
-
-                        // Iterate through the conversion rates and invoke the callback for each currency
-                        for (Iterator<String> it = conversionRates.keys(); it.hasNext(); ) {
-                            String code = it.next();
-                            double exchangeRate = conversionRates.getDouble(code);
-                            handler.post(() -> {
-                                callback.onDataAvailable(code, exchangeRate);
-                            });
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "JSON parsing error: " + e.getMessage());
-                        handler.post(() -> {
-                            callback.onDataAvailable(null, 0.0);
-                        });
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, "API request failed: " + e.getMessage());
-                handler.post(() -> {
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "JSON parsing error: " + e.getMessage());
                     callback.onDataAvailable(null, 0.0);
-                });
+                }
             }
-        });
-        thread.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(TAG, "API request failed: " + e.getMessage());
+            callback.onDataAvailable(null, 0.0);
+        }
     }
 }
+
