@@ -81,14 +81,14 @@ public class CurrencyUtil {
     }
 
     private static void saveSelectedCurrency(Context context, String preferenceKey, Currency currency) {
-        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("CurrencyPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(preferenceKey, currency.getIsoCountryCode());
         editor.apply();
     }
 
     private static Currency getSelectedCurrency(Context context, String preferenceKey) {
-        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("CurrencyPreferences", Context.MODE_PRIVATE);
         String isoCountryCode = preferences.getString(preferenceKey, null);
         if (isoCountryCode != null) {
             for (Currency currency : Currency.values()) {

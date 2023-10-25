@@ -198,7 +198,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <com.ubs.mycurrency.service.NoImeEditText
             android:id="@+id/mainCurrencyInput"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -213,7 +213,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <com.ubs.mycurrency.service.NoImeEditText
             android:id="@+id/secondaryCurrencyInput"
             android:layout_width="match_parent"
             android:layout_height="60dp"

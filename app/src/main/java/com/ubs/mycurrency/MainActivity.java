@@ -18,30 +18,38 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.squareup.picasso.Picasso;
 import com.ubs.mycurrency.api.ExchangeRateAPI;
+import com.ubs.mycurrency.record.ExchangeRate;
+import com.ubs.mycurrency.util.Currency;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_SELECT_CURRENCY = 1;
-    private TextView mainCurrencyRateLabel;
 
+    private List<ExchangeRate> exchangeRates;
+
+    private Map<Integer, Currency> currencyMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadMainFlag(getFlagDefinition("us"));
-        loadSecondaryFlag(getFlagDefinition("gb"));
+        currencyMap.put(1, Currency.getEnumFromString(Currency.class, "USD"));
+        currencyMap.put(2, Currency.getEnumFromString(Currency.class,"EUR"));
+        loadMainFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(1)).getIsoCountryCode()));
+        loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(2)).getIsoCountryCode()));
 
-        ExchangeRateAPI exchangeRateAPI = new ExchangeRateAPI();
-        exchangeRateAPI.setApiUrl("https://v6.exchangerate-api.com/v6/dd4a10dd68634b9030cf3b92/latest/");
+        Log.i("MainActivity", "Main currency: " + Objects.requireNonNull(currencyMap.get(1)).getCountry());
+        Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(currencyMap.get(2)).getCountry());
 
-        exchangeRateAPI.fetchExchangeRates("EUR", (currencyCode, exchangeRate) -> {
-            if (currencyCode != null) {
-                // Handle the specific currency and its exchange rate
-                Log.i("ExchangeRateAPI", currencyCode + ": " + exchangeRate);
-            } else {
-                // Handle the case where the API call failed
-                System.out.println("Failed to fetch data for a currency.");
-            }
-        });
+        exchangeRates = callAPI(Objects.requireNonNull(currencyMap.get(1)).name());
+        Log.i("MainActivity", "Exchange rate size: " + exchangeRates.size());
+        TextView mainLabel = findViewById(R.id.mainCurrencyRateLabel);
+        TextView secondaryLabel = findViewById(R.id.secondaryCurrencyRateLabel);
+        mainLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(1)).name(), exchangeRates));
+        secondaryLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(2)).name(), exchangeRates));
 
     }
 
@@ -61,8 +69,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getFlagDefinition(String countryNameAbbreviation) {
-        String flagDefinition = "https://flagcdn.com/256x192/" + countryNameAbbreviation + ".png";
+        String flagDefinition = "https://flagcdn.com/256x192/" + countryNameAbbreviation.toLowerCase() + ".png";
         Log.i("MainActivity", "Flag definition: " + flagDefinition);
         return flagDefinition;
     }
+
+    private ExchangeRate getExchangeRateByCode(String currencyCode, List<ExchangeRate> exchangeRateList) {
+        for (ExchangeRate exchangeRate : exchangeRateList) {
+            if (exchangeRate.getCurrencyCode().equals(currencyCode)) {
+                return exchangeRate;
+            }
+        }
+        return null; // Return null if not found
+    }
+
+    public List<ExchangeRate> callAPI(String cC) {
+        ExchangeRateAPI exchangeRateAPI = new ExchangeRateAPI();
+        exchangeRateAPI.setApiUrl("https://v6.exchangerate-api.com/v6/dd4a10dd68634b9030cf3b92/latest/");
+        List<ExchangeRate> exchangeRateList = new ArrayList<>();
+        exchangeRateAPI.fetchExchangeRates(cC, (currencyCode, exchangeRate) -> {
+            if (currencyCode != null) {
+                // Handle the specific currency and its exchange rate
+                Log.i("ExchangeRateAPI", currencyCode + ": " + exchangeRate);
+                exchangeRateList.add(new ExchangeRate(currencyCode, exchangeRate));
+            } else {
+                // Handle the case where the API call failed
+                Log.e("ExchangeRateAPI", "API call failed");
+            }
+        });
+        Log.i("MainActivity", "Exchange rate size: " + exchangeRateList.size());
+        return exchangeRateList;
+    }
+
 }
