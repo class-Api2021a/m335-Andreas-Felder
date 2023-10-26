@@ -1,6 +1,7 @@
 package com.ubs.mycurrency;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         currencyMap.put(1, Currency.getEnumFromString(Currency.class, "CHF")); //Default

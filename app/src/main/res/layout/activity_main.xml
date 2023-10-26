@@ -8,15 +8,18 @@
 
     <ImageView
         android:id="@+id/logoBackgroundImage"
-        android:layout_width="869dp"
-        android:layout_height="669dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-150dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="-150dp"
         android:alpha="0.2"
         android:rotation="-50"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.775"
-        app:layout_constraintStart_toEndOf="@+id/gridLayout"
-        app:srcCompat="@mipmap/logo_background"
-        tools:layout_editor_absoluteY="153dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@drawable/swap_logo" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -184,15 +187,16 @@
         app:srcCompat="@drawable/calculator_color_background" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
 
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/shadow_box"
-        app:layout_constraintEnd_toEndOf="parent"
 
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.33"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
