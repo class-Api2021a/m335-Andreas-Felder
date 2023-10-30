@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     public static final List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
 
     // Map to store currency IDs
+    private Button selectCurrencyButtonMain;
+    private Button selectCurrencyButtonSecond;
+    private Button selectCurrencyButtonThird;
+
     public static final Map<Integer, Currency> CURRENCY_MAP = new HashMap<>();
     private Button moreCurrencyButton;
     private final List<Integer> buttonIds = new ArrayList<>();
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Prevents dark mode from affecting the UI
+        Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+
+        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Initialize moreCurrencyButton
@@ -55,15 +62,38 @@ public class MainActivity extends AppCompatActivity {
 
         // OnClickListener for moreCurrencyButton to open CurrencySelectionActivity
         moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
+        selectCurrencyButtonMain = findViewById(R.id.changeMainCurrencyButton);
+        selectCurrencyButtonSecond = findViewById(R.id.changesecondaryCurrencyButton);
+        
+        selectCurrencyButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+                intent.putExtra("currencyselected", "main");
                 startActivity(intent);
             }
         });
 
+        selectCurrencyButtonSecond.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                intent.putExtra("currencyselected", "second");
+                startActivity(intent);
+            }
+        });
+
+        selectCurrencyButtonThird.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                intent.putExtra("currencyselected", "third");
+                startActivity(intent);
+            }
+        });
+
+
         // Get reference to GridLayout and collect Button IDs
         GridLayout gridLayout = findViewById(R.id.gridLayout);
+
+        // Loop through the GridLayout to get the Button IDs
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             View child = gridLayout.getChildAt(i);
             if (child instanceof Button) {
@@ -125,6 +155,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Load flag image for the main currency
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
     private void loadMainFlag(String flagDefinition) {
         // Load image into the ImageView using Picasso
         ImageView imageView = findViewById(R.id.mainCountryImage);
