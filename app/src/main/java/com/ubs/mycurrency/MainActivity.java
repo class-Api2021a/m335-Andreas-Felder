@@ -3,8 +3,11 @@ package com.ubs.mycurrency;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,14 +28,28 @@ public class MainActivity extends AppCompatActivity {
     private final List<ExchangeRate> exchangeRates = new ArrayList<>();
 
     private final Map<Integer, Currency> currencyMap = new HashMap<>();
+    private Button moreCurrencyButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        moreCurrencyButton = findViewById(R.id.moreCurrencyButton);
+
+        moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+                startActivity(intent);
+            }
+        });
+
         currencyMap.put(1, Currency.getEnumFromString(Currency.class, "CHF")); //Default
         currencyMap.put(2, Currency.getEnumFromString(Currency.class,"EUR"));  //Default
         loadMainFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(1)).getIsoCountryCode()));
