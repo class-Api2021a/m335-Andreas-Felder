@@ -12,9 +12,12 @@ public class CalculatorButtonClickListener implements View.OnClickListener {
     private final EditText editText;
     private Context context;
 
+    private CalculateRateService calculateRateService;
+
     public CalculatorButtonClickListener(Context context, EditText editText) {
         this.context = context;
         this.editText = editText;
+        this.calculateRateService =  new CalculateRateService();
     }
 
     @Override
@@ -23,10 +26,7 @@ public class CalculatorButtonClickListener implements View.OnClickListener {
             Button button = (Button) view;
             String buttonText = button.getText().toString();
 
-            if (editText.getText().toString() == null) {
-                return;
-            }
-            if (buttonText.equals(context.getString(R.string.empty_string))) {
+            if (buttonText.equals(context.getString(R.string.empty_string)) && editText.getText().toString().length() > 0) {
                 String text = editText.getText().toString();
                 editText.setText(text.substring(0, text.length() - 1));
             } else {
@@ -40,6 +40,7 @@ public class CalculatorButtonClickListener implements View.OnClickListener {
                 }
             }
         }
+        calculateRateService.calculateRateService(editText);
     }
 
     private void appendEditText(String buttonText) {
