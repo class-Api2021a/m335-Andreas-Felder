@@ -28,11 +28,14 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final List<ExchangeRate> exchangeRates = new ArrayList<>();
+    public static final List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
 
-    private final Map<Integer, Currency> currencyMap = new HashMap<>();
+    public static final Map<Integer, Currency> CURRENCY_MAP = new HashMap<>();
 
     private final List<Integer> buttonIds = new ArrayList<>();
+    
+    public static NoImeEditText mainEditText;
+    public static NoImeEditText secondaryEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        NoImeEditText mainEditText = findViewById(R.id.mainCurrencyInput);
-        NoImeEditText secondaryEditText = findViewById(R.id.secondaryCurrencyInput);
+        mainEditText = findViewById(R.id.mainCurrencyInput);
+        secondaryEditText = findViewById(R.id.secondaryCurrencyInput);
 
         CalculatorButtonClickListener mainButtonClickListener = new CalculatorButtonClickListener(this, mainEditText);
         CalculatorButtonClickListener secondaryButtonClickListener = new CalculatorButtonClickListener(this, secondaryEditText);
@@ -87,18 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        currencyMap.put(1, Currency.getEnumFromString(Currency.class, "CHF")); //Default
-        currencyMap.put(2, Currency.getEnumFromString(Currency.class,"EUR"));  //Default
-        loadMainFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(1)).getIsoCountryCode()));
-        loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(currencyMap.get(2)).getIsoCountryCode()));
+        CURRENCY_MAP.put(1, Currency.getEnumFromString(Currency.class, "CHF")); //Default
+        CURRENCY_MAP.put(2, Currency.getEnumFromString(Currency.class,"EUR"));  //Default
+        loadMainFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(1)).getIsoCountryCode()));
+        loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(2)).getIsoCountryCode()));
         TextView mainLabel = findViewById(R.id.mainCurrencyTag);
         TextView secondaryLabel = findViewById(R.id.secondaryCurrencyTag);
-        mainLabel.setText(Objects.requireNonNull(currencyMap.get(1)).name());
-        secondaryLabel.setText(Objects.requireNonNull(currencyMap.get(2)).name());
+        mainLabel.setText(Objects.requireNonNull(CURRENCY_MAP.get(1)).name());
+        secondaryLabel.setText(Objects.requireNonNull(CURRENCY_MAP.get(2)).name());
 
 
-        Log.i("MainActivity", "Main currency: " + Objects.requireNonNull(currencyMap.get(1)).getCountry());
-        Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(currencyMap.get(2)).getCountry());
+        Log.i("MainActivity", "Main currency: " + Objects.requireNonNull(CURRENCY_MAP.get(1)).getCountry());
+        Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(CURRENCY_MAP.get(2)).getCountry());
 
         runApiThreads();
     }
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         return flagDefinition;
     }
 
-    private ExchangeRate getExchangeRateByCode(String currencyCode, List<ExchangeRate> exchangeRateList) {
+    public static ExchangeRate getExchangeRateByCode(String currencyCode, List<ExchangeRate> exchangeRateList) {
         for (ExchangeRate exchangeRate : exchangeRateList) {
             if (exchangeRate.getCurrencyCode().equals(currencyCode)) {
                 return exchangeRate;
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             if (currencyCode != null) {
                 // Handle the specific currency and its exchange rate
                 Log.i("ExchangeRateAPI", currencyCode + ": " + exchangeRate);
-                exchangeRates.add(new ExchangeRate(currencyCode, exchangeRate));
+                EXCHANGE_RATES.add(new ExchangeRate(currencyCode, exchangeRate));
             } else {
                 // Handle the case where the API call failed
                 Log.e("ExchangeRateAPI", "API call failed");
@@ -149,14 +152,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private synchronized void runApiThreads() {
-        Thread mainThread = new Thread(() -> callAPI(Objects.requireNonNull(currencyMap.get(1)).name()));
+        Thread mainThread = new Thread(() -> callAPI(Objects.requireNonNull(CURRENCY_MAP.get(1)).name()));
 
 
         Thread secondaryThread = new Thread(() -> {
             TextView mainLabel = findViewById(R.id.mainCurrencyRateLabel);
             TextView secondaryLabel = findViewById(R.id.secondaryCurrencyRateLabel);
-            mainLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(1)).name(), exchangeRates).getExchangeRate());
-            secondaryLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(currencyMap.get(2)).name(), exchangeRates).getExchangeRate());
+            mainLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(CURRENCY_MAP.get(1)).name(), EXCHANGE_RATES).getExchangeRate());
+            secondaryLabel.setText("\n\nx " + getExchangeRateByCode(Objects.requireNonNull(CURRENCY_MAP.get(2)).name(), EXCHANGE_RATES).getExchangeRate());
         });
 
         mainThread.start();
