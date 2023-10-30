@@ -3,7 +3,7 @@ package com.ubs.mycurrency;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,20 +31,32 @@ public class MainActivity extends AppCompatActivity {
     public static final List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
 
     public static final Map<Integer, Currency> CURRENCY_MAP = new HashMap<>();
+    private Button moreCurrencyButton;
+
 
     private final List<Integer> buttonIds = new ArrayList<>();
-    
+
     public static NoImeEditText mainEditText;
     public static NoImeEditText secondaryEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        moreCurrencyButton = findViewById(R.id.moreCurrencyButton);
+
+        moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+                startActivity(intent);
+            }
+        });
         GridLayout gridLayout = findViewById(R.id.gridLayout);
 
         // Loop through the GridLayout to get the Button IDs
