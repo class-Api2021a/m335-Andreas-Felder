@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private final List<ExchangeRate> exchangeRates = new ArrayList<>();
 
     private final Map<Integer, Currency> currencyMap = new HashMap<>();
-    private Button moreCurrencyButton;
+    private Button selectCurrencyButtonMain;
+    private Button selectCurrencyButtonSecond;
+    private Button selectCurrencyButtonThird;
 
 
     private final List<Integer> buttonIds = new ArrayList<>();
@@ -42,18 +44,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+
         //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        moreCurrencyButton = findViewById(R.id.moreCurrencyButton);
-
-        moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
+        selectCurrencyButtonMain = findViewById(R.id.changeMainCurrencyButton);
+        selectCurrencyButtonSecond = findViewById(R.id.changesecondaryCurrencyButton);
+        selectCurrencyButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CurrencySelectionActivity.class);
+                intent.putExtra("currencyselected", "main");
                 startActivity(intent);
             }
         });
+
+        selectCurrencyButtonSecond.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                intent.putExtra("currencyselected", "second");
+                startActivity(intent);
+            }
+        });
+
+        selectCurrencyButtonThird.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                intent.putExtra("currencyselected", "third");
+                startActivity(intent);
+            }
+        });
+
         GridLayout gridLayout = findViewById(R.id.gridLayout);
 
         // Loop through the GridLayout to get the Button IDs
@@ -113,6 +134,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity", "Secondary currency: " + Objects.requireNonNull(currencyMap.get(2)).getCountry());
 
         runApiThreads();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
     }
 
     private void loadMainFlag(String flagDefinition) {
