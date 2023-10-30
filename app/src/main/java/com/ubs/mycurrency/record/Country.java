@@ -7,12 +7,12 @@ public class Country {
     private String isoCountryCode; // ISO Country Code
     private boolean favorite; // Flag to indicate if it's a favorite
 
-    public Country(String code, String name, String countryName, String isoCountryCode) {
+    public Country(String code, String name, String countryName, String isoCountryCode, Boolean favorite) {
         this.code = code;
         this.name = name;
         this.countryName = countryName;
         this.isoCountryCode = isoCountryCode;
-        this.favorite = false; // Default to not a favorite
+        this.favorite = favorite; // Default to not a favorite
     }
 
     public String getCode() {
