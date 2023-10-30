@@ -203,5 +203,14 @@ public enum Currency {
         }
         return null;  // or throw an exception if the country name is not found
     }
+
+    public static String getCurrencyByName(String countryName){
+        for(Currency currency : Currency.values()){
+            if (currency.getCountry().equalsIgnoreCase(countryName)){
+                return currency.name();
+            }
+        }
+        return null;
+    }
 }
 

@@ -77,26 +77,6 @@ public class CurrencySelectionActivity extends AppCompatActivity {
         returnToMainScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = getIntent();
-
-                String currencySelected = intent.getStringExtra("currencyselected");
-                switch(currencySelected){
-                    case "main":
-                        MainActivity.CURRENCY_MAP.put(1, Currency.getEnumFromString(Currency.class, selectedCurrency));
-                        break;
-                    case "second":
-                        MainActivity.CURRENCY_MAP.put(2, Currency.getEnumFromString(Currency.class, "CHF"));
-                        break;
-                    case "third":
-                        MainActivity.CURRENCY_MAP.put(3, Currency.getEnumFromString(Currency.class, "EUR"));
-
-                        break;
-                    default:
-                        break;
-                }
-
-                intent.putExtra("result", "newData" +"  " + intent.getStringExtra("currencyselected"));
-
                 finish();
             }
         });
@@ -106,14 +86,9 @@ public class CurrencySelectionActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        // Let's assume 'groupedCountries' is a map where the key is the letter and the value is a list of countries with that letter.
-        // Assuming you have a Map<Character, List<Country>> groupedCountries where key is the initial letter and value is the list of countries starting with that letter.
-
-        // Let's also assume 'mainLayout' is your parent layout where you want to add these CardViews.
         LinearLayout mainLayout = findViewById(R.id.countryScreen);
 
         for (HashMap.Entry<Character, List<String>> entry : firstLetters.entrySet()) {
-
 
             // Create a new LinearLayout for each letter
             LinearLayout letterLayout = new LinearLayout(this);
@@ -127,7 +102,6 @@ public class CurrencySelectionActivity extends AppCompatActivity {
 
             // Loop through countries under this letter
             for (String country : entry.getValue()) {
-                // ... rest of your code ...
 
                 // Create ConstraintLayout for each country
                 ConstraintLayout countryLayout = new ConstraintLayout(this);
@@ -175,31 +149,22 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String currentState = (String) button.getTag();
 
+                        String countryName = (String) ((ConstraintLayout) button.getParent()).getTag();
                         // Toggle the state and background, and call the respective method
                         if ("unfilled".equals(currentState)) {
                             // Change to filled state
                             button.setBackground(ContextCompat.getDrawable(CurrencySelectionActivity.this, R.drawable.filled_star));
                             button.setTag("filled");
 
-                            // Retrieve the country name from the parent layout's tag
-                            String countryName = (String) ((ConstraintLayout) button.getParent()).getTag();
-
-                            // Call your method for the filled state
                             //String resultString = yourFilledStateMethod(countryName);
 
-                            // Do something with resultString...
                         } else {
                             // Change to unfilled state
                             button.setBackground(ContextCompat.getDrawable(CurrencySelectionActivity.this, R.drawable.unfilled_star));
                             button.setTag("unfilled");
 
-                            // Retrieve the country name from the parent layout's tag
-                            String countryName = (String) ((ConstraintLayout) button.getParent()).getTag();
-
-                            // Call your method for the unfilled state
                             //String resultString = yourUnfilledStateMethod(countryName);
 
-                            // Do something with resultString...
                         }
                     }
                 });
@@ -236,6 +201,30 @@ public class CurrencySelectionActivity extends AppCompatActivity {
 
     }
 
+
+    private void changeCurrency (String country){
+        Intent intent = getIntent();
+
+        String currencySelected = intent.getStringExtra("currencyselected");
+        switch(currencySelected){
+            case "main":
+                MainActivity.CURRENCY_MAP.put(1, Currency.getEnumFromString(Currency.class, Currency.getCurrencyByName("")));
+                break;
+            case "second":
+                MainActivity.CURRENCY_MAP.put(2, Currency.getEnumFromString(Currency.class, Currency.getCurrencyByName("")));
+                break;
+            case "third":
+                MainActivity.CURRENCY_MAP.put(3, Currency.getEnumFromString(Currency.class, Currency.getCurrencyByName("")));
+
+                break;
+            default:
+                break;
+        }
+
+        intent.putExtra("result", "newData" +"  " + intent.getStringExtra("currencyselected"));
+
+        finish();
+    }
 
     private int convertToDp(int px) {
         return (int) (px / getResources().getDisplayMetrics().density);
