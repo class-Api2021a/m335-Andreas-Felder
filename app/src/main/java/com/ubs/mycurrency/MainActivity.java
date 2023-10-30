@@ -61,10 +61,16 @@ public class MainActivity extends AppCompatActivity {
         moreCurrencyButton = findViewById(R.id.moreCurrencyButton);
 
         // OnClickListener for moreCurrencyButton to open CurrencySelectionActivity
-        moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
         selectCurrencyButtonMain = findViewById(R.id.changeMainCurrencyButton);
         selectCurrencyButtonSecond = findViewById(R.id.changesecondaryCurrencyButton);
-        
+
+        moreCurrencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
+
         selectCurrencyButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        selectCurrencyButtonThird.setOnClickListener(new View.OnClickListener(){
+        /*selectCurrencyButtonThird.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 intent.putExtra("currencyselected", "third");
                 startActivity(intent);
             }
-        });
+        });*/
 
 
         // Get reference to GridLayout and collect Button IDs
