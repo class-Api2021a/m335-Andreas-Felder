@@ -44,4 +44,15 @@ public class CurrencyUtil {
         return null; // Return null if no matching currency is found
     }
 
+    // Method to find the Currency enum by partial country name or currency code match
+    public static Currency findCurrencyByInput(String input) {
+        for (Currency currency : Currency.values()) {
+            // Check if the input matches partially with the country name or currency code (case-insensitive)
+            if (currency.getCountry().toLowerCase().contains(input.toLowerCase()) || currency.name().toLowerCase().contains(input.toLowerCase())) {
+                return currency;
+            }
+        }
+        return null; // Return null if no matching enum is found
+    }
+
 }
