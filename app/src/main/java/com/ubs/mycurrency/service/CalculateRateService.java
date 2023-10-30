@@ -25,26 +25,33 @@ public class CalculateRateService {
     private int selectedEditTextIndex;
 
     public void calculateRateService(EditText editText) {
-        if (editText.getId() == R.id.mainCurrencyInput) {
-            selectedEditTextIndex = 0;
-            mainEditText = editText;
-            secondaryEditText = MainActivity.secondaryEditText;
+        if (!(editText.getText().toString().equals(""))) {
+
+            if (editText.getId() == R.id.mainCurrencyInput) {
+                selectedEditTextIndex = 0;
+                mainEditText = editText;
+                secondaryEditText = MainActivity.secondaryEditText;
+            } else {
+                selectedEditTextIndex = 1;
+                mainEditText = MainActivity.mainEditText;
+                secondaryEditText = editText;
+            }
+
+            if (selectedEditTextIndex == 0) {
+                ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
+                double secondaryExchangeRateValue = secondaryExchangeRate.getExchangeRate() * Double.parseDouble(mainEditText.getText().toString());
+                secondaryEditText.setText(String.valueOf(Math.round(secondaryExchangeRateValue * 100.0) / 100.0));
+            } else if (selectedEditTextIndex == 1) {
+                ExchangeRate mainExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(1).name(), EXCHANGE_RATES);
+                double mainExchangeRateValue = mainExchangeRate.getExchangeRate() * Double.parseDouble(secondaryEditText.getText().toString());
+                mainEditText.setText(String.valueOf(Math.round(mainExchangeRateValue * 100.0) / 100.0));
+            }
         } else {
-            selectedEditTextIndex = 1;
-            mainEditText = MainActivity.mainEditText;
-            secondaryEditText = editText;
+            clearEditTexts();
         }
-
-        if (selectedEditTextIndex == 0) {
-            ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
-            double secondaryExchangeRateValue = secondaryExchangeRate.getExchangeRate() * Double.parseDouble(mainEditText.getText().toString());
-            secondaryEditText.setText(String.valueOf(Math.round(secondaryExchangeRateValue * 100.0) / 100.0));
-        } else if (selectedEditTextIndex == 1) {
-            ExchangeRate mainExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(1).name(), EXCHANGE_RATES);
-            double mainExchangeRateValue = mainExchangeRate.getExchangeRate() * Double.parseDouble(secondaryEditText.getText().toString());
-            mainEditText.setText(String.valueOf(Math.round(mainExchangeRateValue * 100.0) / 100.0));
-        }
-
-
+    }
+    private void clearEditTexts() {
+        mainEditText.setText("");
+        secondaryEditText.setText("");
     }
 }

@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         CalculatorButtonClickListener mainButtonClickListener = new CalculatorButtonClickListener(this, mainEditText);
         CalculatorButtonClickListener secondaryButtonClickListener = new CalculatorButtonClickListener(this, secondaryEditText);
+        for (int buttonId : buttonIds) {
+            Button button = findViewById(buttonId);
+            button.setOnClickListener(mainButtonClickListener);
+        }
 
         View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
             @Override
