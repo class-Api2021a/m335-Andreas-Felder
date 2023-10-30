@@ -30,13 +30,18 @@ public class CurrencySelectionActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         returnToMainScreen = findViewById(R.id.returnToMainScreen);
-
+        Intent intent = getIntent();
+        String currencyselected = intent.getStringExtra("currencyselected");
+        Log.d("funny", currencyselected);
 
         returnToMainScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CurrencySelectionActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent intent = getIntent();
+
+                intent.putExtra("result", "newData" +"  " + intent.getStringExtra("currencyselected"));
+
+                finish();
             }
         });
     }
