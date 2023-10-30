@@ -65,4 +65,17 @@ public class CountryUtil {
 
         return currencies;
     }
+
+    // Method to find the Currency enum by partial country name or currency code match
+    public List<Currency> findCurrencyByInput(String input) {
+        List<Currency> currencies = new ArrayList<>();
+        for (Country country : countryList) {
+            // Check if the input matches partially with the country name or currency code (case-insensitive)
+            Currency currency = Currency.getEnumFromString(Currency.class, country.getCode());
+            if (currency.getCountry().toLowerCase().contains(input.toLowerCase()) || currency.name().toLowerCase().contains(input.toLowerCase())) {
+                currencies.add(currency);
+            }
+        }
+        return currencies;
+    }
 }
