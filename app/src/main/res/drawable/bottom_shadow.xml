@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- This is the main background color of your view -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+
+    <!-- This is the shadow at the bottom -->
+    <item
+        android:top="-4dp"
+        android:right="0dp"
+        android:left="0dp"
+        android:bottom="0dp">
+    <shape android:shape="rectangle">
+        <gradient
+            android:startColor="#1A000000"
+            android:endColor="@android:color/transparent"
+            android:angle="90"/>  <!-- This means the gradient goes from top to bottom -->
+    </shape>
+</item>
+
+    </layer-list>

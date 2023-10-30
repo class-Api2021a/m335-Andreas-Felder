@@ -33,7 +33,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     // List to store exchange rates
-    public static final List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
+    public static List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
 
     // Map to store currency IDs
     private Button selectCurrencyButtonMain;
@@ -143,6 +143,13 @@ public class MainActivity extends AppCompatActivity {
         CURRENCY_MAP.put(2, Currency.getEnumFromString(Currency.class, "EUR"));
 
         // Load flags for default currencies
+
+    }
+
+    // Load flag image for the main currency
+    @Override
+    public void onResume() {
+        super.onResume();
         loadMainFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(1)).getIsoCountryCode()));
         loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(2)).getIsoCountryCode()));
 
@@ -158,13 +165,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Run API threads to fetch exchange rates
         runApiThreads();
-    }
-
-    // Load flag image for the main currency
-    @Override
-    public void onResume() {
-        super.onResume();
-
 
     }
 
@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
     // Call API to fetch exchange rates for a given currency
     private void callAPI(String currencyCode) {
         ExchangeRateAPI exchangeRateAPI = new ExchangeRateAPI();
+        EXCHANGE_RATES = new ArrayList<>();
         exchangeRateAPI.setApiUrl("https://v6.exchangerate-api.com/v6/dd4a10dd68634b9030cf3b92/latest/");
         exchangeRateAPI.fetchExchangeRates(currencyCode, (code, exchangeRate) -> {
             if (code != null) {
