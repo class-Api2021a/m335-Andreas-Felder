@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Button selectCurrencyButtonSecond;
     private Button selectCurrencyButtonThird;
 
+    private CalculateRateService calculateRateService;
+
     public static final Map<Integer, Currency> CURRENCY_MAP = new HashMap<>();
     private Button moreCurrencyButton;
     private final List<Integer> buttonIds = new ArrayList<>();
@@ -152,8 +154,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        calculateRateService = new CalculateRateService();
         loadMainFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(1)).getIsoCountryCode()));
         loadSecondaryFlag(getFlagDefinition(Objects.requireNonNull(CURRENCY_MAP.get(2)).getIsoCountryCode()));
+        if (mainEditText.getText() != null && !mainEditText.getText().toString().isEmpty()) {
+            calculateRateService.calculateRateService(mainEditText);
+        }
 
         // Set default currency names on TextViews
         TextView mainLabel = findViewById(R.id.mainCurrencyTag);
