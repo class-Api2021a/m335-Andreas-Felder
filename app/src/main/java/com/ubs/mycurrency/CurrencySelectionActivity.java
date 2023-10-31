@@ -6,10 +6,13 @@ import static com.ubs.mycurrency.util.CurrencyUtil.getSortedCountryNames;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -54,6 +57,10 @@ public class CurrencySelectionActivity extends AppCompatActivity {
 
     private static String selectedCurrency = "USD";
 
+    private String searchInput = "";
+
+    private List<Currency> currencies = new ArrayList<>();
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,25 @@ public class CurrencySelectionActivity extends AppCompatActivity {
 
             }
         });
+
+        EditText searchField = findViewById(R.id.countryInput);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This method is called to notify you that the characters within `EditText` will change.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This method is called to notify you that the characters within `EditText` have changed.
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                currencies = CurrencyUtil.findCurrenciesByInput(editable.toString());
+                drawCountryList();
+            }
+        });
         returnToMainScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,8 +147,15 @@ public class CurrencySelectionActivity extends AppCompatActivity {
         for(String s : countries){
             faveCharacters.add(s.charAt(0));
         }
+        HashSet<Character> searchCharacters = new HashSet<>();
+        for(Currency c : currencies){
+            searchCharacters.add(c.getCountry().charAt(0));
+        }
         for (HashMap.Entry<Character, List<String>> entry : firstLetters.entrySet()) {
                 if(isFavoriteSwitchChecked && !faveCharacters.contains(entry.getKey()) ){
+                    continue;
+                }
+                if (currencies.size() > 0 && !searchCharacters.contains(entry.getKey())){
                     continue;
                 }
             // Create a new LinearLayout for each letter
@@ -139,6 +172,9 @@ public class CurrencySelectionActivity extends AppCompatActivity {
             // Loop through countries under this letter
             for (String country : entry.getValue()) {
                 if(isFavoriteSwitchChecked && !countries.contains(CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, country).getCountry())) {
+                    continue;
+                }
+                if (currencies.size() > 0 && !currencies.contains(CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, country))) {
                     continue;
                 }
                 // Create ConstraintLayout for each country
