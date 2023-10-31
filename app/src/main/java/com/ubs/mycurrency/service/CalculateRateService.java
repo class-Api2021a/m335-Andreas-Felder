@@ -24,6 +24,9 @@ public class CalculateRateService {
     // EditTexts for main and secondary currencies, and an index to determine selected EditText
     private EditText mainEditText;
     private EditText secondaryEditText;
+
+    private EditText thirdEditText;
+
     private int selectedEditTextIndex;
 
     // Method to calculate the exchange rate based on the edited EditText
@@ -36,10 +39,17 @@ public class CalculateRateService {
                 selectedEditTextIndex = 0; // Indicates the main currency EditText
                 mainEditText = editText;
                 secondaryEditText = MainActivity.secondaryEditText;
-            } else {
+                thirdEditText = MainActivity.thirdEditText;
+            } else if (editText.getId() == R.id.secondaryCurrencyInput){
                 selectedEditTextIndex = 1; // Indicates the secondary currency EditText
                 mainEditText = MainActivity.mainEditText;
                 secondaryEditText = editText;
+                thirdEditText = MainActivity.thirdEditText;
+            } else if (editText.getId() == R.id.thirdCurrencyInput) {
+                selectedEditTextIndex = 2; // Indicates the secondary currency EditText
+                mainEditText = MainActivity.mainEditText;
+                secondaryEditText = MainActivity.secondaryEditText;
+                thirdEditText = editText;
             }
 
             Log.d(TAG, "Selected EditText index: " + selectedEditTextIndex);
@@ -48,13 +58,27 @@ public class CalculateRateService {
             if (selectedEditTextIndex == 0) {
                 // If the main currency EditText is edited
                 ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
+                ExchangeRate thirdExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(3).name(), EXCHANGE_RATES);
                 double secondaryExchangeRateValue = secondaryExchangeRate.getExchangeRate() * Double.parseDouble(mainEditText.getText().toString());
+                double thirdExchangeRateValue = thirdExchangeRate.getExchangeRate() * Double.parseDouble(mainEditText.getText().toString());
                 secondaryEditText.setText(String.valueOf(Math.round(secondaryExchangeRateValue * 100.0) / 100.0));
+                thirdEditText.setText(String.valueOf(Math.round(thirdExchangeRateValue * 100.0) / 100.0));
                 Log.d(TAG, "Updated secondaryEditText with calculated value: " + secondaryEditText.getText());
             } else if (selectedEditTextIndex == 1) { // If the secondary currency EditText is edited
                 ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
+                ExchangeRate thirdExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(3).name(), EXCHANGE_RATES);
                 double mainExchangeRateValue = (1 / secondaryExchangeRate.getExchangeRate()) * Double.parseDouble(secondaryEditText.getText().toString());
+                double thirdExchangeRateValue = thirdExchangeRate.getExchangeRate() * mainExchangeRateValue;
                 mainEditText.setText(String.valueOf(Math.round(mainExchangeRateValue * 100.0) / 100.0));
+                thirdEditText.setText(String.valueOf(Math.round(thirdExchangeRateValue * 100.0) / 100.0));
+                Log.d(TAG, "Updated mainEditText with calculated value: " + mainEditText.getText());
+            } else if (selectedEditTextIndex == 2) {
+                ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
+                ExchangeRate thirdExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(3).name(), EXCHANGE_RATES);
+                double mainExchangeRateValue = (1 / thirdExchangeRate.getExchangeRate()) * Double.parseDouble(thirdEditText.getText().toString());
+                double secondaryExchangeRateValue = secondaryExchangeRate.getExchangeRate() * mainExchangeRateValue;
+                mainEditText.setText(String.valueOf(Math.round(mainExchangeRateValue * 100.0) / 100.0));
+                secondaryEditText.setText(String.valueOf(Math.round(secondaryExchangeRateValue * 100.0) / 100.0));
                 Log.d(TAG, "Updated mainEditText with calculated value: " + mainEditText.getText());
             }
         } else {

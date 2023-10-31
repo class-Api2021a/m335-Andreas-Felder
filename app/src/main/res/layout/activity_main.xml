@@ -11,14 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-150dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="-150dp"
         android:alpha="0.2"
         android:rotation="-50"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/swap_logo" />
 
     <GridLayout
@@ -197,41 +197,117 @@
         android:background="@drawable/shadow_box"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.33"
+        app:layout_constraintHeight_percent="0.31"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <com.ubs.mycurrency.service.NoImeEditText
+            android:id="@+id/thirdCurrencyInput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="175dp"
+            android:layout_marginTop="220dp"
+            android:layout_marginEnd="25dp"
+            android:ems="10"
+            android:hint="00.00"
+
+
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/thirdCurrencyTag"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_currency"
+            android:textColor="@color/light_blue"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/thirdCurrencyArrowImage"
+            app:layout_constraintTop_toTopOf="@+id/thirdCurrencyArrowImage" />
+
+        <Button
+            android:id="@+id/changethirdCurrencyButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/empty_string"
+            app:layout_constraintBottom_toBottomOf="@+id/thirdCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/secondaryCountryImage"
+            app:layout_constraintTop_toTopOf="@+id/thirdCurrencyInput"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/thirdCurrencyRateLabel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="\n\nTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/thirdCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/secondaryCurrencyInput"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/secondaryCurrencyTag"
+            app:layout_constraintTop_toTopOf="@+id/thirdCurrencyInput"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/thirdCountryImage"
+            android:layout_width="39dp"
+            android:layout_height="0dp"
+
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/thirdCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/thirdCurrencyTag"
+            app:layout_constraintTop_toTopOf="@+id/thirdCurrencyInput"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/thirdCurrencyArrowImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/thirdCurrencyInput"
+            app:layout_constraintEnd_toStartOf="@+id/thirdCurrencyInput"
+            app:layout_constraintTop_toTopOf="@+id/thirdCurrencyInput"
+            app:layout_constraintVertical_bias="0.35"
+            app:srcCompat="@drawable/arrow" />
 
         <com.ubs.mycurrency.service.NoImeEditText
             android:id="@+id/mainCurrencyInput"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="175dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="185dp"
             android:ems="10"
             android:hint="00.00"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toBottomOf="parent"
 
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.ubs.mycurrency.service.NoImeEditText
             android:id="@+id/secondaryCurrencyInput"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="175dp"
+            android:layout_marginTop="140dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="110dp"
             android:ems="10"
             android:hint="00.00"
+
+
             android:inputType="numberDecimal"
-
-
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/secondaryCurrencyArrowImage"
