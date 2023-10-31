@@ -238,6 +238,7 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                             countryUtil.removeFavoriteCountry(CurrencySelectionActivity.this, country.getCode());
 
                         }
+                        if(isFavoriteSwitchChecked){drawCountryList();}
                     }
                 });
 
