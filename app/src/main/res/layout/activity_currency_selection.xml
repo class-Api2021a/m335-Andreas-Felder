@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_bottom" />
-                -->
+
 
             </androidx.cardview.widget.CardView>
 
@@ -65,7 +65,7 @@
     </ScrollView>
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/favoriteSwitch"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginTop="18dp"

@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +47,7 @@ public class CurrencySelectionActivity extends AppCompatActivity {
             ConstraintLayout.LayoutParams.MATCH_PARENT,
             80);
 
+    public static boolean isFavoriteSwitchChecked = false;
 
     private static List<String> countryNames = getSortedCountryNames();
     private static HashMap<Character, List<String>> firstLetters = new HashMap<>();
@@ -74,9 +77,22 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                 orderedCountry.add(str);
             }
         }
+        if(orderedCountry.size() != 0){
+            firstLetters.put(oldLetter, orderedCountry);
+        }
 
+        Switch faveSwitch =  findViewById(R.id.favoriteSwitch);
+        faveSwitch.setChecked(isFavoriteSwitchChecked);
 
+        faveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
 
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                isFavoriteSwitchChecked = isChecked;
+                drawCountryList();
+
+            }
+        });
         returnToMainScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,13 +104,27 @@ public class CurrencySelectionActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        drawCountryList();
 
+
+    }
+
+    private void drawCountryList (){
         LinearLayout mainLayout = findViewById(R.id.countryScreen);
+        mainLayout.removeAllViews();
         CountryUtil countryUtil = new CountryUtil(CurrencySelectionActivity.this);
 
         countryUtil.loadFavoriteCountries(CurrencySelectionActivity.this);
-        for (HashMap.Entry<Character, List<String>> entry : firstLetters.entrySet()) {
+        List<String> countries = countryUtil.getSortedCountriesNamesByFavorite(CurrencySelectionActivity.this);
 
+        HashSet<Character> faveCharacters = new HashSet<>();
+        for(String s : countries){
+            faveCharacters.add(s.charAt(0));
+        }
+        for (HashMap.Entry<Character, List<String>> entry : firstLetters.entrySet()) {
+                if(isFavoriteSwitchChecked && !faveCharacters.contains(entry.getKey()) ){
+                    continue;
+                }
             // Create a new LinearLayout for each letter
             LinearLayout letterLayout = new LinearLayout(this);
             letterLayout.setOrientation(LinearLayout.VERTICAL);
@@ -107,7 +137,9 @@ public class CurrencySelectionActivity extends AppCompatActivity {
 
             // Loop through countries under this letter
             for (String country : entry.getValue()) {
-
+                if(isFavoriteSwitchChecked && !countries.contains(CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, country).getCountry())) {
+                    continue;
+                }
                 // Create ConstraintLayout for each country
                 ConstraintLayout countryLayout = new ConstraintLayout(this);
                 countryLayout.setTag(country);
@@ -142,7 +174,7 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                 button.setId(View.generateViewId());
                 ConstraintLayout.LayoutParams buttonLayoutParams = new ConstraintLayout.LayoutParams(50, 50);
                 button.setLayoutParams(buttonLayoutParams);
-                List<String> countries = countryUtil.getSortedCountriesNamesByFavorite(CurrencySelectionActivity.this);
+
 
                 if (countries.contains(CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, country).getCountry())) {
                     button.setBackground(ContextCompat.getDrawable(this, R.drawable.filled_star));
@@ -210,10 +242,7 @@ public class CurrencySelectionActivity extends AppCompatActivity {
             }
 
         }
-
-
     }
-
 
     private void changeCurrency (String country){
         Intent intent = getIntent();
