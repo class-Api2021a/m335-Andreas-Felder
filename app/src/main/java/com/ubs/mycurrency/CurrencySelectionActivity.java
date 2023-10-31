@@ -129,6 +129,7 @@ public class CurrencySelectionActivity extends AppCompatActivity {
             LinearLayout letterLayout = new LinearLayout(this);
             letterLayout.setOrientation(LinearLayout.VERTICAL);
 
+
             // Add header TextView for the initial letter
             TextView headerTextView = new TextView(this);
             headerTextView.setText(String.valueOf(entry.getKey()));
@@ -146,6 +147,32 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                 countryLayout.setId(View.generateViewId());  // Generate unique ID for constraints
                 countryLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.border_bottom));
                 countryLayout.setLayoutParams(layoutParamsInnerConstraintlayout);
+                countryLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = getIntent();
+                        selectedCurrency = Currency.getCurrencyByName((String)countryLayout.getTag());
+                        String currencySelected = intent.getStringExtra("currencyselected");
+                        switch(currencySelected){
+                            case "main":
+                                MainActivity.CURRENCY_MAP.put(1, Currency.getEnumFromString(Currency.class, selectedCurrency));
+                                break;
+                            case "second":
+                                MainActivity.CURRENCY_MAP.put(2, Currency.getEnumFromString(Currency.class, selectedCurrency));
+                                break;
+                            case "third":
+                                MainActivity.CURRENCY_MAP.put(3, Currency.getEnumFromString(Currency.class, selectedCurrency));
+                                break;
+                            default:
+                                break;
+                        }
+
+                        intent.putExtra("result", "newData" +"  " + intent.getStringExtra("currencyselected"));
+
+                        finish();
+                    }
+                });
+
 
                 // Create and setup ImageView
                 ImageView imageView = new ImageView(this);
