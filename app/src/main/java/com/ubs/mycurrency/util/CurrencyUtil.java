@@ -35,7 +35,7 @@ public class CurrencyUtil {
         return null; // Return null if no matching enum is found
     }
 
-    private static Currency findCurrencyByCountryName(Context context, String targetCountryName) {
+    public static Currency findCurrencyByCountryName(Context context, String targetCountryName) {
         for (Currency currency : Currency.values()) {
             if (currency.getCountry().equalsIgnoreCase(targetCountryName)) {
                 return currency;

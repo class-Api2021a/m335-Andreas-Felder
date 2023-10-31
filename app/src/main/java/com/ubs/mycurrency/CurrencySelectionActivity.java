@@ -1,5 +1,6 @@
 package com.ubs.mycurrency;
 
+import static com.ubs.mycurrency.util.CountryUtil.createCountry;
 import static com.ubs.mycurrency.util.CurrencyUtil.getSortedCountryNames;
 
 import android.annotation.SuppressLint;
@@ -21,7 +22,9 @@ import androidx.core.content.ContextCompat;
 
 import com.squareup.picasso.Picasso;
 import com.ubs.mycurrency.record.Country;
+import com.ubs.mycurrency.util.CountryUtil;
 import com.ubs.mycurrency.util.Currency;
+import com.ubs.mycurrency.util.CurrencyUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +90,9 @@ public class CurrencySelectionActivity extends AppCompatActivity {
         super.onResume();
 
         LinearLayout mainLayout = findViewById(R.id.countryScreen);
+        CountryUtil countryUtil = new CountryUtil(CurrencySelectionActivity.this);
 
+        countryUtil.loadFavoriteCountries(CurrencySelectionActivity.this);
         for (HashMap.Entry<Character, List<String>> entry : firstLetters.entrySet()) {
 
             // Create a new LinearLayout for each letter
@@ -137,8 +142,15 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                 button.setId(View.generateViewId());
                 ConstraintLayout.LayoutParams buttonLayoutParams = new ConstraintLayout.LayoutParams(50, 50);
                 button.setLayoutParams(buttonLayoutParams);
-                button.setBackground(ContextCompat.getDrawable(this, R.drawable.unfilled_star));
-                button.setTag("unfilled");
+                List<String> countries = countryUtil.getSortedCountriesNamesByFavorite(CurrencySelectionActivity.this);
+
+                if (countries.contains(CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, country).getCountry())) {
+                    button.setBackground(ContextCompat.getDrawable(this, R.drawable.filled_star));
+                    button.setTag("filled");
+                } else {
+                    button.setBackground(ContextCompat.getDrawable(this, R.drawable.unfilled_star));
+                    button.setTag("unfilled");
+                }
 
 
                 //Button Callback that will allways alternate between two methods, one meant to add
@@ -149,21 +161,22 @@ public class CurrencySelectionActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String currentState = (String) button.getTag();
 
+                        countryUtil.loadFavoriteCountries(CurrencySelectionActivity.this);
                         String countryName = (String) ((ConstraintLayout) button.getParent()).getTag();
+                        Currency currency = CurrencyUtil.findCurrencyByCountryName(CurrencySelectionActivity.this, countryName);
+                        Country country = createCountry(currency);
                         // Toggle the state and background, and call the respective method
                         if ("unfilled".equals(currentState)) {
                             // Change to filled state
                             button.setBackground(ContextCompat.getDrawable(CurrencySelectionActivity.this, R.drawable.filled_star));
                             button.setTag("filled");
-
-                            //String resultString = yourFilledStateMethod(countryName);
-
+                            countryUtil.addCountry(country);
+                            countryUtil.saveFavoriteCountries(CurrencySelectionActivity.this);
                         } else {
                             // Change to unfilled state
                             button.setBackground(ContextCompat.getDrawable(CurrencySelectionActivity.this, R.drawable.unfilled_star));
                             button.setTag("unfilled");
-
-                            //String resultString = yourUnfilledStateMethod(countryName);
+                            countryUtil.removeFavoriteCountry(CurrencySelectionActivity.this, country.getCode());
 
                         }
                     }

@@ -21,13 +21,17 @@ public class CountryUtil {
         loadFavoriteCountries(context);
     }
 
-    public void toggleFavorite(Context context, Country country) {
-        country.setFavorite(!country.isFavorite());
-        saveFavoriteCountries(context);
+    public static Country createCountry(Currency currency) {
+        return new Country(currency.name(), currency.getCountry(), currency.getCountry(), currency.getCountry(), false);
+    }
+
+    public void addCountry(Country country) {
+        country.setFavorite(true);
+        countryList.add(country);
     }
 
 
-    private void saveFavoriteCountries(Context context) {
+    public void saveFavoriteCountries(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         Set<String> favoriteCodes = new HashSet<>();
 
@@ -51,19 +55,36 @@ public class CountryUtil {
 
     }
 
-    public List<Currency> getSortedCurrencyNamesByFavorite(Context context) {
-        List<Currency> currencies = new ArrayList<>();
+    // Method to remove a specific record from SharedPreferences
+    public void removeFavoriteCountry(Context context, String countryCodeToRemove) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+        Set<String> favoriteCodes = preferences.getStringSet(FAVORITE_COUNTRIES_KEY, new HashSet<>());
+
+        if (favoriteCodes.contains(countryCodeToRemove)) {
+            favoriteCodes.remove(countryCodeToRemove);
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putStringSet(FAVORITE_COUNTRIES_KEY, favoriteCodes);
+            editor.apply();
+        } else {
+            // If the country code is not found in SharedPreferences
+            // Handle the case accordingly, e.g., throw an error or log a message
+        }
+    }
+
+    public List<String> getSortedCountriesNamesByFavorite(Context context) {
+        List<String> countries = new ArrayList<>();
         loadFavoriteCountries(context);
 
         // Iterate through the Currency enum and add country names to the list
         for (Country country : countryList) {
-            currencies.add(Currency.getEnumFromString(Currency.class, country.getCode()));
+            countries.add(country.getCountryName());
         }
 
         // Sort the country names alphabetically
-        Collections.sort(currencies);
+        Collections.sort(countries);
 
-        return currencies;
+        return countries;
     }
 
     // Method to find the Currency enum by partial country name or currency code match
