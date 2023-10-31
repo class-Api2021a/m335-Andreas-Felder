@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     int screenHeight = displayMetrics.heightPixels;
 
                     // Calculate the desired percentage of the screen height
-                    int desiredHeightPercentage = 35; // Change this value to your desired percentage
+                    int desiredHeightPercentage = 42; // Change this value to your desired percentage
 
                     // Convert the percentage to pixels
                     int desiredHeight = (int) (screenHeight * (desiredHeightPercentage / 100.0));
