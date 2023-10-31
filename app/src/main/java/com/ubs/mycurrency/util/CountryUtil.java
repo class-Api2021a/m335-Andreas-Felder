@@ -87,6 +87,21 @@ public class CountryUtil {
         return countries;
     }
 
+    public List<Currency> getSortedCurrenciesByFavorite(Context context) {
+        List<Currency> currencies = new ArrayList<>();
+        loadFavoriteCountries(context);
+
+        // Iterate through the Currency enum and add country names to the list
+        for (Country country : countryList) {
+            currencies.add(Currency.getEnumFromString(Currency.class, country.getCode()));
+        }
+
+        // Sort the country names alphabetically
+        Collections.sort(currencies);
+
+        return currencies;
+    }
+
     // Method to find the Currency enum by partial country name or currency code match
     public List<Currency> findCurrencyByInput(String input) {
         List<Currency> currencies = new ArrayList<>();
