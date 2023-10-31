@@ -1,5 +1,8 @@
 package com.ubs.mycurrency.service;
 
+import static com.ubs.mycurrency.MainActivity.CURRENCY_MAP;
+import static com.ubs.mycurrency.MainActivity.EXCHANGE_RATES;
+
 import android.util.Log;
 import android.widget.EditText;
 
@@ -17,9 +20,6 @@ public class CalculateRateService {
     // Tag for logging
     private static final String TAG = "CalculateRateService";
 
-    // Access exchange rates and currency map from MainActivity
-    private static final List<ExchangeRate> EXCHANGE_RATES = MainActivity.EXCHANGE_RATES;
-    private static final Map<Integer, Currency> CURRENCY_MAP = MainActivity.CURRENCY_MAP;
 
     // EditTexts for main and secondary currencies, and an index to determine selected EditText
     private EditText mainEditText;
@@ -45,7 +45,8 @@ public class CalculateRateService {
             Log.d(TAG, "Selected EditText index: " + selectedEditTextIndex);
 
             // Calculate and update values based on the selected EditText
-            if (selectedEditTextIndex == 0) { // If the main currency EditText is edited
+            if (selectedEditTextIndex == 0) {
+                // If the main currency EditText is edited
                 ExchangeRate secondaryExchangeRate = MainActivity.getExchangeRateByCode(CURRENCY_MAP.get(2).name(), EXCHANGE_RATES);
                 double secondaryExchangeRateValue = secondaryExchangeRate.getExchangeRate() * Double.parseDouble(mainEditText.getText().toString());
                 secondaryEditText.setText(String.valueOf(Math.round(secondaryExchangeRateValue * 100.0) / 100.0));

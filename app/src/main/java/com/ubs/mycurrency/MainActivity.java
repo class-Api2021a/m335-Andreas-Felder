@@ -33,7 +33,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     // List to store exchange rates
-    public static List<ExchangeRate> EXCHANGE_RATES = new ArrayList<>();
+    public static List<ExchangeRate> EXCHANGE_RATES;
 
     // Map to store currency IDs
     private Button selectCurrencyButtonMain;
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         //prevents that dark mode makes the UI unusable by stopping it from making all white elements dark
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        EXCHANGE_RATES = new ArrayList<>();
 
         // Initialize moreCurrencyButton
         moreCurrencyButton = findViewById(R.id.moreCurrencyButton);
