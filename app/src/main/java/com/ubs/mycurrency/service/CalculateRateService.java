@@ -91,6 +91,7 @@ public class CalculateRateService {
     private void clearEditTexts() {
         mainEditText.setText("");
         secondaryEditText.setText("");
+        thirdEditText.setText("");
         Log.d(TAG, "Cleared both EditTexts.");
     }
 }
